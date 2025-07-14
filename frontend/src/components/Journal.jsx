@@ -4,13 +4,15 @@ import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { mockData } from "../utils/mockData";
 import { useToast } from "../hooks/use-toast";
-import { Mic, MicOff, Image, Save, Sparkles } from "lucide-react";
+import { Mic, MicOff, Image, Save, MessageCircle, Edit3, Sparkles } from "lucide-react";
+import ChatInterface from "./ChatInterface";
 
 const Journal = () => {
   const [journalText, setJournalText] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
   const [generatedImage, setGeneratedImage] = useState(null);
+  const [currentMode, setCurrentMode] = useState("journal"); // "journal" or "chat"
   const { toast } = useToast();
 
   const handleVoiceRecording = () => {
@@ -71,6 +73,10 @@ const Journal = () => {
     }, 1000);
   };
 
+  const handleModeSwitch = (mode) => {
+    setCurrentMode(mode);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-purple-800 relative overflow-hidden">
       {/* Background effects */}
@@ -85,119 +91,157 @@ const Journal = () => {
       <div className="absolute bottom-40 right-1/3 w-1 h-1 bg-white rounded-full animate-pulse delay-3000"></div>
 
       <div className="container mx-auto px-4 py-8 relative z-10">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-light text-white mb-2">
+            <h1 className="text-4xl md:text-5xl font-light text-white mb-4">
               Hãy <span className="italic font-normal">viết</span> cho chính mình...
             </h1>
-          </div>
-
-          {/* Main journal container */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
-            {/* Journal textarea */}
-            <div className="mb-6">
-              <Textarea
-                placeholder="Bạn có thể bắt đầu bằng cảm xúc, một suy nghĩ, hoặc một điều bạn muốn thấu hiểu..."
-                value={journalText}
-                onChange={(e) => setJournalText(e.target.value)}
-                className="min-h-[200px] bg-white/5 border-white/20 text-white placeholder:text-white/60 text-lg leading-relaxed resize-none focus:bg-white/10 transition-all duration-300"
-              />
-            </div>
-
-            {/* Voice recording button */}
+            
+            {/* Mode toggle */}
             <div className="flex justify-center mb-6">
-              <div className="relative">
+              <div className="bg-white/10 backdrop-blur-lg rounded-full p-1 border border-white/20">
                 <Button
-                  onClick={handleVoiceRecording}
-                  className={`w-20 h-20 rounded-full transition-all duration-300 ${
-                    isRecording
-                      ? "bg-red-500 hover:bg-red-600 scale-110"
-                      : "bg-white/20 hover:bg-white/30"
-                  } border-2 border-white/30 shadow-lg`}
-                  disabled={isRecording}
+                  onClick={() => handleModeSwitch("journal")}
+                  className={`px-6 py-2 rounded-full transition-all duration-300 ${
+                    currentMode === "journal"
+                      ? "bg-white/20 text-white shadow-lg"
+                      : "bg-transparent text-white/70 hover:text-white"
+                  }`}
                 >
-                  {isRecording ? (
-                    <MicOff className="w-8 h-8 text-white" />
-                  ) : (
-                    <Mic className="w-8 h-8 text-white" />
-                  )}
+                  <Edit3 className="w-4 h-4 mr-2" />
+                  Viết nhật ký
                 </Button>
-                
-                {/* Recording animation */}
-                {isRecording && (
-                  <div className="absolute inset-0 rounded-full border-4 border-red-400 animate-ping"></div>
-                )}
+                <Button
+                  onClick={() => handleModeSwitch("chat")}
+                  className={`px-6 py-2 rounded-full transition-all duration-300 ${
+                    currentMode === "chat"
+                      ? "bg-white/20 text-white shadow-lg"
+                      : "bg-transparent text-white/70 hover:text-white"
+                  }`}
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Trò chuyện với AI
+                </Button>
               </div>
             </div>
+          </div>
 
-            {/* Voice recording feedback text */}
-            <div className="text-center mb-6">
-              <p className="text-white/80 text-sm">
-                {isRecording 
-                  ? "Đang ghi âm..." 
-                  : "Cảm ơn bạn đã lắng nghe chính mình. Tôi luôn ở đây."
-                }
-              </p>
-            </div>
+          {/* Journal Mode */}
+          {currentMode === "journal" && (
+            <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl transform transition-all duration-500">
+              {/* Journal textarea */}
+              <div className="mb-6">
+                <Textarea
+                  placeholder="Bạn có thể bắt đầu bằng cảm xúc, một suy nghĩ, hoặc một điều bạn muốn thấu hiểu..."
+                  value={journalText}
+                  onChange={(e) => setJournalText(e.target.value)}
+                  className="min-h-[200px] bg-white/5 border-white/20 text-white placeholder:text-white/60 text-lg leading-relaxed resize-none focus:bg-white/10 transition-all duration-300"
+                />
+              </div>
 
-            {/* Generated image display */}
-            {generatedImage && (
-              <div className="mb-6 text-center">
-                <div className="bg-white/10 rounded-2xl p-4 inline-block">
-                  <img 
-                    src={generatedImage} 
-                    alt="Generated from journal" 
-                    className="max-w-full h-48 object-cover rounded-xl"
-                  />
+              {/* Voice recording button */}
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <Button
+                    onClick={handleVoiceRecording}
+                    className={`w-20 h-20 rounded-full transition-all duration-300 ${
+                      isRecording
+                        ? "bg-red-500 hover:bg-red-600 scale-110"
+                        : "bg-white/20 hover:bg-white/30"
+                    } border-2 border-white/30 shadow-lg`}
+                    disabled={isRecording}
+                  >
+                    {isRecording ? (
+                      <MicOff className="w-8 h-8 text-white" />
+                    ) : (
+                      <Mic className="w-8 h-8 text-white" />
+                    )}
+                  </Button>
+                  
+                  {/* Recording animation */}
+                  {isRecording && (
+                    <div className="absolute inset-0 rounded-full border-4 border-red-400 animate-ping"></div>
+                  )}
                 </div>
               </div>
-            )}
 
-            {/* Create image button */}
-            <div className="flex justify-center mb-6">
-              <Button
-                onClick={handleCreateImage}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                <Image className="w-5 h-5 mr-2" />
-                Tạo ảnh từ đoạn viết này
-              </Button>
-            </div>
-
-            {/* Bottom controls */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              {/* Privacy checkbox */}
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="private"
-                  checked={isPrivate}
-                  onCheckedChange={setIsPrivate}
-                  className="border-white/30 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
-                />
-                <label
-                  htmlFor="private"
-                  className="text-sm text-white/80 cursor-pointer"
-                >
-                  Chỉ mình tôi xem
-                </label>
+              {/* Voice recording feedback text */}
+              <div className="text-center mb-6">
+                <p className="text-white/80 text-sm">
+                  {isRecording 
+                    ? "Đang ghi âm..." 
+                    : "Cảm ơn bạn đã lắng nghe chính mình. Tôi luôn ở đây."
+                  }
+                </p>
               </div>
 
-              {/* Save button */}
-              <Button
-                onClick={handleSaveJournal}
-                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                <Save className="w-5 h-5 mr-2" />
-                Lưu nhật ký
-              </Button>
+              {/* Generated image display */}
+              {generatedImage && (
+                <div className="mb-6 text-center">
+                  <div className="bg-white/10 rounded-2xl p-4 inline-block">
+                    <img 
+                      src={generatedImage} 
+                      alt="Generated from journal" 
+                      className="max-w-full h-48 object-cover rounded-xl"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Create image button */}
+              <div className="flex justify-center mb-6">
+                <Button
+                  onClick={handleCreateImage}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  <Image className="w-5 h-5 mr-2" />
+                  Tạo ảnh từ đoạn viết này
+                </Button>
+              </div>
+
+              {/* Bottom controls */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                {/* Privacy checkbox */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="private"
+                    checked={isPrivate}
+                    onCheckedChange={setIsPrivate}
+                    className="border-white/30 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
+                  />
+                  <label
+                    htmlFor="private"
+                    className="text-sm text-white/80 cursor-pointer"
+                  >
+                    Chỉ mình tôi xem
+                  </label>
+                </div>
+
+                {/* Save button */}
+                <Button
+                  onClick={handleSaveJournal}
+                  className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  <Save className="w-5 h-5 mr-2" />
+                  Lưu nhật ký
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Chat Mode */}
+          {currentMode === "chat" && (
+            <ChatInterface journalText={journalText} />
+          )}
 
           {/* Footer */}
           <div className="text-center mt-8">
             <p className="text-white/60 text-sm">
-              Một không gian riêng tư để bạn khám phá và thể hiện chính mình
+              {currentMode === "journal" 
+                ? "Một không gian riêng tư để bạn khám phá và thể hiện chính mình"
+                : "Trò chuyện với AI để khám phá sâu hơn về cảm xúc và suy nghĩ của bạn"
+              }
             </p>
           </div>
         </div>
