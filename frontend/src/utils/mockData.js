@@ -24,6 +24,73 @@ Tôi nghĩ về những giấc mơ mà mình đã từng có và nhận ra rằn
     }
   ],
 
+  personalInfo: [
+    {
+      type: "about",
+      title: "Về tôi",
+      description: "Tôi là một người có khuynh hướng nội tâm, thích suy ngẫm và khám phá bản thân. Thông qua việc viết nhật ký, tôi đã nhận ra nhiều điều thú vị về cách mình nhìn nhận cuộc sống. Tôi tin rằng mỗi ngày đều mang đến cơ hội để phát triển và trở thành phiên bản tốt hơn của chính mình.",
+      tags: ["Nội tâm", "Tự nhận thức", "Phát triển bản thân"],
+      progress: 75
+    },
+    {
+      type: "research",
+      title: "Nghiên cứu phát triển",
+      description: "Tôi thường xuyên nghiên cứu về tâm lý học, triết học và các phương pháp phát triển bản thân. Việc đọc sách, tham gia các khóa học online và thực hành meditation đã giúp tôi hiểu rõ hơn về cảm xúc và suy nghĩ của mình.",
+      tags: ["Tâm lý học", "Triết học", "Meditation", "Đọc sách"],
+      progress: 68
+    },
+    {
+      type: "strengths",
+      title: "Điểm mạnh",
+      description: "Khả năng lắng nghe và thấu hiểu cảm xúc của bản thân và người khác. Tôi có thể nhìn nhận vấn đề từ nhiều góc độ khác nhau và tìm ra giải pháp sáng tạo. Sự kiên nhẫn và khả năng tự học hỏi cũng là những điểm mạnh của tôi.",
+      points: [
+        "Khả năng lắng nghe và thấu hiểu",
+        "Tư duy sáng tạo và linh hoạt",
+        "Kiên nhẫn trong học hỏi",
+        "Khả năng tự phản ánh và cải thiện"
+      ],
+      progress: 82
+    },
+    {
+      type: "weaknesses",
+      title: "Điểm yếu",
+      description: "Đôi khi tôi có xu hướng suy nghĩ quá nhiều về một vấn đề, dẫn đến việc trì hoãn quyết định. Tôi cũng thường khá khắt khe với bản thân và cần học cách tha thứ cho những sai lầm của mình. Việc thể hiện cảm xúc trước đông người vẫn là một thách thức.",
+      points: [
+        "Có xu hướng overthinking",
+        "Khắt khe với bản thân",
+        "Khó thể hiện cảm xúc công khai",
+        "Đôi khi thiếu quyết đoán"
+      ],
+      progress: 45
+    },
+    {
+      type: "confidence",
+      title: "Chìa khóa tự tin",
+      description: "Tự tin của tôi đến từ việc hiểu rõ bản thân và chấp nhận những điểm mạnh cũng như điểm yếu. Khi tôi viết nhật ký và suy ngẫm, tôi cảm thấy được kết nối với chính mình. Những thành tựu nhỏ hàng ngày và phản hồi tích cực từ người khác cũng giúp tôi tự tin hơn.",
+      tags: ["Tự nhận thức", "Thành tựu nhỏ", "Phản hồi tích cực"],
+      progress: 70
+    },
+    {
+      type: "improvement",
+      title: "Gợi ý cải thiện",
+      description: "Tôi nên thực hành thêm các kỹ năng giao tiếp và thể hiện cảm xúc một cách tự nhiên hơn. Việc tham gia các hoạt động nhóm và thử thách bản thân với những việc mới sẽ giúp tôi phát triển thêm. Đồng thời, tôi cần học cách cân bằng giữa suy nghĩ và hành động.",
+      points: [
+        "Thực hành kỹ năng giao tiếp",
+        "Tham gia hoạt động nhóm",
+        "Thử thách bản thân với điều mới",
+        "Cân bằng suy nghĩ và hành động"
+      ],
+      progress: 60
+    },
+    {
+      type: "development",
+      title: "Cốt lõi phát triển",
+      description: "Phát triển bản thân là hành trình dài không có điểm dừng. Tôi tin rằng việc duy trì thói quen viết nhật ký, đọc sách và thực hành mindfulness sẽ giúp tôi không ngừng phát triển. Mục tiêu là trở thành một người cân bằng giữa lý trí và cảm xúc, có khả năng tạo ra tác động tích cực đến cuộc sống của mình và người xung quanh.",
+      tags: ["Mindfulness", "Cân bằng", "Tác động tích cực"],
+      progress: 78
+    }
+  ],
+
   aiResponses: {
     emotional: [
       "Tôi hiểu bạn đang trải qua thời gian khó khăn. Cảm xúc buồn bã là hoàn toàn bình thường và cần thiết. Hãy cho phép mình cảm nhận những cảm xúc này, nhưng nhớ rằng chúng sẽ qua đi. Bạn có muốn chia sẻ thêm về điều gì đang làm bạn khó chịu không?",

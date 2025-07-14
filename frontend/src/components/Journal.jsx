@@ -4,15 +4,16 @@ import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { mockData } from "../utils/mockData";
 import { useToast } from "../hooks/use-toast";
-import { Mic, MicOff, Image, Save, MessageCircle, Edit3, Sparkles } from "lucide-react";
+import { Mic, MicOff, Image, Save, MessageCircle, Edit3, Info, Sparkles } from "lucide-react";
 import ChatInterface from "./ChatInterface";
+import InfoScreen from "./InfoScreen";
 
 const Journal = () => {
   const [journalText, setJournalText] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
   const [generatedImage, setGeneratedImage] = useState(null);
-  const [currentMode, setCurrentMode] = useState("journal"); // "journal" or "chat"
+  const [currentMode, setCurrentMode] = useState("journal"); // "journal", "chat", or "info"
   const { toast } = useToast();
 
   const handleVoiceRecording = () => {
@@ -77,6 +78,19 @@ const Journal = () => {
     setCurrentMode(mode);
   };
 
+  const getFooterText = () => {
+    switch(currentMode) {
+      case "journal":
+        return "Một không gian riêng tư để bạn khám phá và thể hiện chính mình";
+      case "chat":
+        return "Trò chuyện với AI để khám phá sâu hơn về cảm xúc và suy nghĩ của bạn";
+      case "info":
+        return "Thông tin chi tiết về bản thân được phân tích từ nhật ký và cuộc trò chuyện";
+      default:
+        return "Một không gian riêng tư để bạn khám phá và thể hiện chính mình";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-purple-800 relative overflow-hidden">
       {/* Background effects */}
@@ -103,7 +117,7 @@ const Journal = () => {
               <div className="bg-white/10 backdrop-blur-lg rounded-full p-1 border border-white/20">
                 <Button
                   onClick={() => handleModeSwitch("journal")}
-                  className={`px-6 py-2 rounded-full transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-full transition-all duration-300 ${
                     currentMode === "journal"
                       ? "bg-white/20 text-white shadow-lg"
                       : "bg-transparent text-white/70 hover:text-white"
@@ -114,7 +128,7 @@ const Journal = () => {
                 </Button>
                 <Button
                   onClick={() => handleModeSwitch("chat")}
-                  className={`px-6 py-2 rounded-full transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-full transition-all duration-300 ${
                     currentMode === "chat"
                       ? "bg-white/20 text-white shadow-lg"
                       : "bg-transparent text-white/70 hover:text-white"
@@ -122,6 +136,17 @@ const Journal = () => {
                 >
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Trò chuyện với AI
+                </Button>
+                <Button
+                  onClick={() => handleModeSwitch("info")}
+                  className={`px-4 py-2 rounded-full transition-all duration-300 ${
+                    currentMode === "info"
+                      ? "bg-white/20 text-white shadow-lg"
+                      : "bg-transparent text-white/70 hover:text-white"
+                  }`}
+                >
+                  <Info className="w-4 h-4 mr-2" />
+                  Thông tin
                 </Button>
               </div>
             </div>
@@ -235,13 +260,15 @@ const Journal = () => {
             <ChatInterface journalText={journalText} />
           )}
 
+          {/* Info Mode */}
+          {currentMode === "info" && (
+            <InfoScreen />
+          )}
+
           {/* Footer */}
           <div className="text-center mt-8">
             <p className="text-white/60 text-sm">
-              {currentMode === "journal" 
-                ? "Một không gian riêng tư để bạn khám phá và thể hiện chính mình"
-                : "Trò chuyện với AI để khám phá sâu hơn về cảm xúc và suy nghĩ của bạn"
-              }
+              {getFooterText()}
             </p>
           </div>
         </div>
