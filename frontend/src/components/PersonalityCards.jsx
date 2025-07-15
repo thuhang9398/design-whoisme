@@ -78,45 +78,39 @@ const PersonalityCards = () => {
           <div className="flex justify-center">
             <div 
               ref={cardRef}
-              className={`w-80 h-96 rounded-3xl relative overflow-hidden shadow-2xl ${selectedPersonality.gradient} border-2 ${selectedPersonality.borderColor}`}
-              style={{ 
-                background: selectedPersonality.background 
+              className={`w-80 h-96 rounded-3xl relative overflow-hidden shadow-2xl border-2 ${selectedPersonality.borderColor}`}
+              style={{
+                backgroundImage: `url(${selectedPersonality.backgroundImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
               }}
             >
+              {/* Overlay gradient for better text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+              
               {/* Card Content */}
-              <div className="h-full flex flex-col justify-between p-8 relative">
+              <div className="h-full flex flex-col justify-between p-8 relative z-10">
                 {/* Title */}
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold text-white mb-2 tracking-wide">
+                  <h3 className="text-2xl font-bold text-white mb-2 tracking-wide drop-shadow-lg">
                     {selectedPersonality.name}
                   </h3>
                 </div>
 
-                {/* Silhouette */}
-                <div className="flex-1 flex items-center justify-center">
-                  <div className="relative">
-                    <svg 
-                      width="120" 
-                      height="180" 
-                      viewBox="0 0 24 24" 
-                      className="text-black/50"
-                      fill="currentColor"
-                    >
-                      <path d={selectedPersonality.silhouette} />
-                    </svg>
-                  </div>
-                </div>
+                {/* Spacer for background image */}
+                <div className="flex-1"></div>
 
                 {/* Quote */}
                 <div className="text-center mb-6">
-                  <p className="text-white/90 text-sm italic leading-relaxed">
+                  <p className="text-white text-sm italic leading-relaxed drop-shadow-md">
                     {selectedPersonality.quote}
                   </p>
                 </div>
 
                 {/* Button */}
                 <div className="text-center">
-                  <div className={`inline-block px-6 py-2 rounded-full border-2 ${selectedPersonality.borderColor} bg-transparent`}>
+                  <div className={`inline-block px-6 py-2 rounded-full border-2 ${selectedPersonality.borderColor} bg-black/20 backdrop-blur-sm`}>
                     <span className="text-white text-sm font-medium">
                       KHÁM PHÁ BẢN THÂN
                     </span>
@@ -125,7 +119,7 @@ const PersonalityCards = () => {
 
                 {/* Footer */}
                 <div className="text-center mt-4">
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white/80 text-xs drop-shadow-sm">
                     Tại WhoIsMe.AI bằng AI
                   </p>
                 </div>
