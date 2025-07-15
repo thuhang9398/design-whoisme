@@ -10,6 +10,7 @@ import html2canvas from "html2canvas";
 const PersonalityCards = () => {
   const [selectedPersonality, setSelectedPersonality] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const cardRef = useRef(null);
   const { toast } = useToast();
 
