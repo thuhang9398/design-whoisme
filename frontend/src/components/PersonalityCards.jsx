@@ -52,54 +52,172 @@ const PersonalityCards = () => {
     try {
       setIsDownloading(true);
       
-      // Show loading state
       toast({
         title: "Đang tạo ảnh...",
         description: "Vui lòng đợi một chút.",
       });
 
-      // Function to convert image to base64
-      const getImageAsBase64 = (url) => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.crossOrigin = 'anonymous';
-          img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-            const dataURL = canvas.toDataURL('image/png');
-            resolve(dataURL);
-          };
-          img.onerror = reject;
-          img.src = url;
-        });
+      // Create a temporary card element for rendering
+      const tempCard = document.createElement('div');
+      tempCard.style.cssText = `
+        width: 288px;
+        height: 450px;
+        position: fixed;
+        top: -9999px;
+        left: -9999px;
+        border-radius: 24px;
+        overflow: hidden;
+        background-image: url(${selectedPersonality.backgroundImage});
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border: 2px solid;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      `;
+
+      // Set border color based on personality
+      const borderColors = {
+        'border-orange-400': '#fb923c',
+        'border-green-400': '#4ade80',
+        'border-purple-400': '#c084fc',
+        'border-blue-400': '#60a5fa',
+        'border-teal-400': '#2dd4bf',
+        'border-gray-400': '#9ca3af'
       };
+      tempCard.style.borderColor = borderColors[selectedPersonality.borderColor] || '#60a5fa';
 
-      // Convert background image to base64
-      const base64Image = await getImageAsBase64(selectedPersonality.backgroundImage);
+      // Create overlay
+      const overlay = document.createElement('div');
+      overlay.style.cssText = `
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2), transparent);
+      `;
+
+      // Create content container
+      const content = document.createElement('div');
+      content.style.cssText = `
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 24px;
+        position: relative;
+        z-index: 10;
+      `;
+
+      // Create title
+      const title = document.createElement('div');
+      title.style.cssText = `
+        text-align: center;
+        padding-top: 16px;
+      `;
+      const titleText = document.createElement('h3');
+      titleText.style.cssText = `
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        margin: 0 0 8px 0;
+        letter-spacing: 0.025em;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      `;
+      titleText.textContent = selectedPersonality.name;
+      title.appendChild(titleText);
+
+      // Create spacer
+      const spacer = document.createElement('div');
+      spacer.style.cssText = 'flex: 1;';
+
+      // Create quote
+      const quote = document.createElement('div');
+      quote.style.cssText = `
+        text-align: center;
+        margin-bottom: 24px;
+        padding: 0 8px;
+      `;
+      const quoteText = document.createElement('p');
+      quoteText.style.cssText = `
+        color: white;
+        font-size: 14px;
+        font-style: italic;
+        line-height: 1.5;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      `;
+      quoteText.textContent = selectedPersonality.quote;
+      quote.appendChild(quoteText);
+
+      // Create button
+      const button = document.createElement('div');
+      button.style.cssText = `
+        text-align: center;
+        margin-bottom: 16px;
+      `;
+      const buttonDiv = document.createElement('div');
+      buttonDiv.style.cssText = `
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 9999px;
+        border: 2px solid ${borderColors[selectedPersonality.borderColor] || '#60a5fa'};
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+      `;
+      const buttonText = document.createElement('span');
+      buttonText.style.cssText = `
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      `;
+      buttonText.textContent = 'KHÁM PHÁ BẢN THÂN';
+      buttonDiv.appendChild(buttonText);
+      button.appendChild(buttonDiv);
+
+      // Create footer
+      const footer = document.createElement('div');
+      footer.style.cssText = `
+        text-align: center;
+        padding-bottom: 8px;
+      `;
+      const footerText = document.createElement('p');
+      footerText.style.cssText = `
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 12px;
+        margin: 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      `;
+      footerText.textContent = 'Tại WhoIsMe.AI bằng AI';
+      footer.appendChild(footerText);
+
+      // Assemble the card
+      content.appendChild(title);
+      content.appendChild(spacer);
+      content.appendChild(quote);
+      content.appendChild(button);
+      content.appendChild(footer);
       
-      // Temporarily set background to base64
-      const originalBackground = cardRef.current.style.backgroundImage;
-      cardRef.current.style.backgroundImage = `url(${base64Image})`;
+      tempCard.appendChild(overlay);
+      tempCard.appendChild(content);
+      document.body.appendChild(tempCard);
 
-      const canvas = await html2canvas(cardRef.current, {
+      // Wait for images to load
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      const canvas = await html2canvas(tempCard, {
         scale: 2,
         backgroundColor: null,
         useCORS: true,
         allowTaint: false,
         logging: false,
-        width: cardRef.current.offsetWidth,
-        height: cardRef.current.offsetHeight,
-        scrollX: 0,
-        scrollY: 0,
-        windowWidth: cardRef.current.offsetWidth,
-        windowHeight: cardRef.current.offsetHeight,
+        width: 288,
+        height: 450,
       });
 
-      // Restore original background
-      cardRef.current.style.backgroundImage = originalBackground;
+      // Clean up
+      document.body.removeChild(tempCard);
 
       // Create download link
       const link = document.createElement("a");
@@ -120,7 +238,7 @@ const PersonalityCards = () => {
       console.error("Download error:", error);
       toast({
         title: "Lỗi tải xuống",
-        description: "Không thể tải xuống card. Có thể do lỗi CORS. Vui lòng thử lại.",
+        description: "Không thể tải xuống card. Vui lòng thử lại.",
         variant: "destructive",
       });
     } finally {
