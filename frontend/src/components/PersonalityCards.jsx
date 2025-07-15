@@ -30,32 +30,11 @@ const PersonalityCards = () => {
     }, 2000);
   };
 
-  const downloadCard = async () => {
-    if (!cardRef.current) return;
-
-    try {
-      const canvas = await html2canvas(cardRef.current, {
-        scale: 2,
-        backgroundColor: null,
-        useCORS: true,
-      });
-
-      const link = document.createElement("a");
-      link.download = `personality-card-${selectedPersonality.name.replace(/\s+/g, '-').toLowerCase()}.png`;
-      link.href = canvas.toDataURL();
-      link.click();
-
-      toast({
-        title: "Tải xuống thành công!",
-        description: "Card tính cách đã được lưu vào máy của bạn.",
-      });
-    } catch (error) {
-      toast({
-        title: "Lỗi tải xuống",
-        description: "Không thể tải xuống card. Vui lòng thử lại.",
-        variant: "destructive",
-      });
-    }
+  const downloadCard = () => {
+    toast({
+      title: "Tính năng đang phát triển",
+      description: "Chức năng tải xuống sẽ sớm có trong phiên bản tiếp theo!",
+    });
   };
 
   return (
