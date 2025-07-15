@@ -188,13 +188,15 @@ const PersonalityCards = () => {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 12px 24px;
+        padding: 14px 24px;
         border-radius: 9999px;
         border: 2px solid ${borderColors[selectedPersonality.borderColor] || '#60a5fa'};
         background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(4px);
         text-align: center;
         min-width: 200px;
+        height: 44px;
+        box-sizing: border-box;
       `;
       const buttonText = document.createElement('span');
       buttonText.style.cssText = `
@@ -206,6 +208,9 @@ const PersonalityCards = () => {
         text-align: center;
         display: inline-block;
         white-space: nowrap;
+        vertical-align: middle;
+        margin: 0;
+        padding: 0;
       `;
       buttonText.textContent = 'KHÁM PHÁ BẢN THÂN';
       buttonDiv.appendChild(buttonText);
