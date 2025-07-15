@@ -50,6 +50,8 @@ const PersonalityCards = () => {
     }
 
     try {
+      setIsDownloading(true);
+      
       // Show loading state
       toast({
         title: "Đang tạo ảnh...",
@@ -92,6 +94,8 @@ const PersonalityCards = () => {
         description: "Không thể tải xuống card. Vui lòng thử lại.",
         variant: "destructive",
       });
+    } finally {
+      setIsDownloading(false);
     }
   };
 
