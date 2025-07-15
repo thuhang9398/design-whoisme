@@ -249,50 +249,122 @@ const PersonalityCards = () => {
           }
         }, 'image/png', 1.0);
       });
-      
-      // Try Web Share API first
-      if (navigator.share && navigator.canShare) {
-        const file = new File([blob], `personality-card-${selectedPersonality.name.replace(/\s+/g, '-').toLowerCase()}.png`, {
-          type: 'image/png',
-        });
-        
-        const shareData = {
-          title: `Card Tính Cách: ${selectedPersonality.name}`,
-          text: `Tôi là ${selectedPersonality.name}! ${selectedPersonality.quote}`,
-          files: [file],
-        };
 
-        if (navigator.canShare(shareData)) {
-          await navigator.share(shareData);
-          toast({
-            title: "Chia sẻ thành công!",
-            description: "Card đã được chia sẻ.",
+      // Upload image to imgur for sharing
+      const uploadToImgur = async (imageBlob) => {
+        const formData = new FormData();
+        formData.append('image', imageBlob);
+        
+        try {
+          const response = await fetch('https://api.imgur.com/3/image', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Client-ID 546c25a59c58ad7', // Public client ID
+            },
+            body: formData
           });
-          return;
+          
+          const result = await response.json();
+          if (result.success) {
+            return result.data.link;
+          } else {
+            throw new Error('Upload failed');
+          }
+        } catch (error) {
+          console.error('Imgur upload error:', error);
+          return null;
+        }
+      };
+
+      // Upload image to get shareable URL
+      toast({
+        title: "Đang upload ảnh...",
+        description: "Vui lòng đợi để có thể chia sẻ.",
+      });
+
+      const imageUrl = await uploadToImgur(blob);
+      
+      if (!imageUrl) {
+        // Fallback: Use base64 data URL
+        const dataUrl = canvas.toDataURL('image/png', 1.0);
+        
+        // Try Web Share API with data URL
+        if (navigator.share) {
+          try {
+            const file = new File([blob], `personality-card-${selectedPersonality.name.replace(/\s+/g, '-').toLowerCase()}.png`, {
+              type: 'image/png',
+            });
+            
+            await navigator.share({
+              title: `Card Tính Cách: ${selectedPersonality.name}`,
+              text: `Tôi là ${selectedPersonality.name}! ${selectedPersonality.quote}`,
+              files: [file],
+            });
+            
+            toast({
+              title: "Chia sẻ thành công!",
+              description: "Card đã được chia sẻ.",
+            });
+            return;
+          } catch (error) {
+            console.log('Web Share API failed, showing fallback options');
+          }
         }
       }
-
-      // Fallback: Show share options
+      
+      // Create share options with image URL
       const shareText = `Tôi là ${selectedPersonality.name}! ${selectedPersonality.quote}`;
       const shareUrl = window.location.href;
+      const finalImageUrl = imageUrl || shareUrl; // Use app URL as fallback
       
-      // Create share options
       const shareOptions = [
         {
           name: 'Facebook',
-          url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
+          icon: '📘',
+          url: imageUrl 
+            ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}&quote=${encodeURIComponent(shareText)}`
+            : `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
         },
         {
           name: 'Twitter',
-          url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+          icon: '🐦',
+          url: imageUrl 
+            ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(imageUrl)}`
+            : `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
         },
         {
           name: 'LinkedIn',
-          url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+          icon: '💼',
+          url: imageUrl 
+            ? `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(imageUrl)}`
+            : `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
         },
         {
-          name: 'Copy link',
+          name: 'Pinterest',
+          icon: '📌',
+          url: imageUrl 
+            ? `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&media=${encodeURIComponent(imageUrl)}&description=${encodeURIComponent(shareText)}`
+            : `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&description=${encodeURIComponent(shareText)}`,
+        },
+        {
+          name: 'Telegram',
+          icon: '✈️',
+          url: imageUrl 
+            ? `https://t.me/share/url?url=${encodeURIComponent(imageUrl)}&text=${encodeURIComponent(shareText)}`
+            : `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
+        },
+        {
+          name: 'WhatsApp',
+          icon: '💬',
+          url: imageUrl 
+            ? `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + imageUrl)}`
+            : `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`,
+        },
+        {
+          name: 'Copy link ảnh',
+          icon: '📋',
           action: 'copy',
+          data: imageUrl || shareUrl,
         },
       ];
 
