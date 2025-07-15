@@ -420,6 +420,8 @@ const PersonalityCards = () => {
       setIsSharing(false);
     }
   };
+
+  const downloadCard = async () => {
     if (!cardRef.current || !selectedPersonality) {
       toast({
         title: "Lỗi",
