@@ -239,7 +239,15 @@ const PersonalityCards = () => {
       document.body.removeChild(tempCard);
 
       // Convert canvas to blob
-      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error('Failed to create blob'));
+          }
+        }, 'image/png', 1.0);
+      });
       
       // Try Web Share API first
       if (navigator.share && navigator.canShare) {
