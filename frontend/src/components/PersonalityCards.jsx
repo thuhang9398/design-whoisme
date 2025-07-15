@@ -764,6 +764,24 @@ const PersonalityCards = () => {
             </Button>
             
             <Button
+              onClick={shareCard}
+              disabled={isSharing}
+              className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              {isSharing ? (
+                <>
+                  <div className="w-5 h-5 mr-2 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Đang chia sẻ...
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-5 h-5 mr-2" />
+                  Chia Sẻ
+                </>
+              )}
+            </Button>
+            
+            <Button
               onClick={downloadCard}
               disabled={isDownloading}
               className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
