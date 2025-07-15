@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { Download, RotateCcw, Sparkles, User } from "lucide-react";
+import { Download, RotateCcw, Sparkles, User, Share2 } from "lucide-react";
 import { mockData } from "../utils/mockData";
 import { useToast } from "../hooks/use-toast";
 import html2canvas from "html2canvas";
