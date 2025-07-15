@@ -640,12 +640,13 @@ const PersonalityCards = () => {
 
       const canvas = await html2canvas(tempCard, {
         scale: 2,
-        backgroundColor: null,
+        backgroundColor: '#ffffff',
         useCORS: false,
         allowTaint: true,
         logging: false,
         width: 288,
         height: 450,
+        foreignObjectRendering: false,
       });
 
       // Clean up
