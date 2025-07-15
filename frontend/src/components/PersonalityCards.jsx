@@ -94,8 +94,16 @@ const PersonalityCards = () => {
 
                 {/* Silhouette */}
                 <div className="flex-1 flex items-center justify-center">
-                  <div className="w-32 h-32 rounded-full bg-black/30 flex items-center justify-center">
-                    <User className="w-16 h-16 text-black/60" />
+                  <div className="relative">
+                    <svg 
+                      width="120" 
+                      height="180" 
+                      viewBox="0 0 24 24" 
+                      className="text-black/50"
+                      fill="currentColor"
+                    >
+                      <path d={selectedPersonality.silhouette} />
+                    </svg>
                   </div>
                 </div>
 
