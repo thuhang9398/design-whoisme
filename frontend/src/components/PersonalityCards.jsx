@@ -5,6 +5,7 @@ import { Badge } from "./ui/badge";
 import { Download, RotateCcw, Sparkles, User } from "lucide-react";
 import { mockData } from "../utils/mockData";
 import { useToast } from "../hooks/use-toast";
+import html2canvas from "html2canvas";
 
 const PersonalityCards = () => {
   const [selectedPersonality, setSelectedPersonality] = useState(null);
