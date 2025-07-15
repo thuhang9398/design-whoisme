@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -12,6 +12,11 @@ const PersonalityCards = () => {
   const cardRef = useRef(null);
   const { toast } = useToast();
 
+  // Auto-generate card when component mounts
+  useEffect(() => {
+    generateRandomPersonality();
+  }, []);
+
   const generateRandomPersonality = () => {
     setIsGenerating(true);
     
@@ -23,11 +28,13 @@ const PersonalityCards = () => {
       setSelectedPersonality(randomPersonality);
       setIsGenerating(false);
       
-      toast({
-        title: "Đã tạo card tính cách!",
-        description: `Bạn là ${randomPersonality.name}`,
-      });
-    }, 2000);
+      if (selectedPersonality) { // Only show toast if it's a regeneration
+        toast({
+          title: "Đã tạo card mới!",
+          description: `Bạn là ${randomPersonality.name}`,
+        });
+      }
+    }, 1500);
   };
 
   const downloadCard = () => {
@@ -45,36 +52,27 @@ const PersonalityCards = () => {
           <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <Sparkles className="w-10 h-10 text-white" />
           </div>
-          <h2 className="text-2xl font-light text-white mb-2">Tạo Card Tính Cách</h2>
+          <h2 className="text-2xl font-light text-white mb-2">Card Tính Cách</h2>
           <p className="text-white/70 text-sm">
-            AI sẽ phân tích tính cách của bạn và tạo ra card đẹp mắt để chia sẻ
+            AI đã phân tích tính cách của bạn và tạo ra card đẹp mắt
           </p>
         </div>
       </div>
 
-      {/* Generate Button */}
-      <div className="flex justify-center mb-8">
-        <Button
-          onClick={generateRandomPersonality}
-          disabled={isGenerating}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
-        >
-          {isGenerating ? (
-            <>
-              <div className="w-5 h-5 mr-2 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              Đang phân tích...
-            </>
-          ) : (
-            <>
-              <RotateCcw className="w-5 h-5 mr-2" />
-              Tạo Card Tính Cách
-            </>
-          )}
-        </Button>
-      </div>
+      {/* Loading State */}
+      {isGenerating && (
+        <div className="flex justify-center items-center mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin mb-4"></div>
+              <p className="text-white/80 text-sm">Đang phân tích tính cách...</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Generated Card */}
-      {selectedPersonality && (
+      {selectedPersonality && !isGenerating && (
         <div className="space-y-6">
           {/* Card Preview */}
           <div className="flex justify-center">
@@ -127,14 +125,23 @@ const PersonalityCards = () => {
             </div>
           </div>
 
-          {/* Download Button */}
-          <div className="flex justify-center">
+          {/* Action Buttons */}
+          <div className="flex justify-center space-x-4">
+            <Button
+              onClick={generateRandomPersonality}
+              disabled={isGenerating}
+              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              <RotateCcw className="w-5 h-5 mr-2" />
+              Tạo Lại
+            </Button>
+            
             <Button
               onClick={downloadCard}
               className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               <Download className="w-5 h-5 mr-2" />
-              Tải xuống Card
+              Tải Xuống
             </Button>
           </div>
 
@@ -171,19 +178,6 @@ const PersonalityCards = () => {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Placeholder when no card is generated */}
-      {!selectedPersonality && !isGenerating && (
-        <div className="text-center">
-          <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-12 border border-white/20 border-dashed">
-            <Sparkles className="w-16 h-16 text-white/40 mx-auto mb-4" />
-            <p className="text-white/60 text-lg mb-2">Chưa có card nào được tạo</p>
-            <p className="text-white/40 text-sm">
-              Nhấn "Tạo Card Tính Cách" để AI phân tích và tạo card cho bạn
-            </p>
           </div>
         </div>
       )}
