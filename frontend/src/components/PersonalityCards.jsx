@@ -38,11 +38,60 @@ const PersonalityCards = () => {
     }, 1500);
   };
 
-  const downloadCard = () => {
-    toast({
-      title: "Tính năng đang phát triển",
-      description: "Chức năng tải xuống sẽ sớm có trong phiên bản tiếp theo!",
-    });
+  const downloadCard = async () => {
+    if (!cardRef.current || !selectedPersonality) {
+      toast({
+        title: "Lỗi",
+        description: "Không thể tải xuống card. Vui lòng thử lại.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Show loading state
+      toast({
+        title: "Đang tạo ảnh...",
+        description: "Vui lòng đợi một chút.",
+      });
+
+      const canvas = await html2canvas(cardRef.current, {
+        scale: 2,
+        backgroundColor: null,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        width: cardRef.current.offsetWidth,
+        height: cardRef.current.offsetHeight,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: cardRef.current.offsetWidth,
+        windowHeight: cardRef.current.offsetHeight,
+      });
+
+      // Create download link
+      const link = document.createElement("a");
+      const fileName = `personality-card-${selectedPersonality.name.replace(/\s+/g, '-').toLowerCase()}.png`;
+      link.download = fileName;
+      link.href = canvas.toDataURL("image/png", 1.0);
+      
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      toast({
+        title: "Tải xuống thành công!",
+        description: `Card "${selectedPersonality.name}" đã được lưu vào máy của bạn.`,
+      });
+    } catch (error) {
+      console.error("Download error:", error);
+      toast({
+        title: "Lỗi tải xuống",
+        description: "Không thể tải xuống card. Vui lòng thử lại.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
