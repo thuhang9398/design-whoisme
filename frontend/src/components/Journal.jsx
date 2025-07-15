@@ -4,16 +4,17 @@ import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { mockData } from "../utils/mockData";
 import { useToast } from "../hooks/use-toast";
-import { Mic, MicOff, Image, Save, MessageCircle, Edit3, Info, Sparkles } from "lucide-react";
+import { Mic, MicOff, Image, Save, MessageCircle, Edit3, Info, CreditCard, Sparkles } from "lucide-react";
 import ChatInterface from "./ChatInterface";
 import InfoScreen from "./InfoScreen";
+import PersonalityCards from "./PersonalityCards";
 
 const Journal = () => {
   const [journalText, setJournalText] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
   const [generatedImage, setGeneratedImage] = useState(null);
-  const [currentMode, setCurrentMode] = useState("journal"); // "journal", "chat", or "info"
+  const [currentMode, setCurrentMode] = useState("journal"); // "journal", "chat", "info", or "cards"
   const { toast } = useToast();
 
   const handleVoiceRecording = () => {
@@ -86,6 +87,8 @@ const Journal = () => {
         return "Trò chuyện với AI để khám phá sâu hơn về cảm xúc và suy nghĩ của bạn";
       case "info":
         return "Thông tin chi tiết về bản thân được phân tích từ nhật ký và cuộc trò chuyện";
+      case "cards":
+        return "Tạo và tải xuống các card tính cách đẹp mắt dựa trên phân tích AI";
       default:
         return "Một không gian riêng tư để bạn khám phá và thể hiện chính mình";
     }
@@ -114,39 +117,50 @@ const Journal = () => {
             
             {/* Mode toggle */}
             <div className="flex justify-center mb-6">
-              <div className="bg-white/10 backdrop-blur-lg rounded-full p-1 border border-white/20">
+              <div className="bg-white/10 backdrop-blur-lg rounded-full p-1 border border-white/20 flex flex-wrap gap-1">
                 <Button
                   onClick={() => handleModeSwitch("journal")}
-                  className={`px-4 py-2 rounded-full transition-all duration-300 ${
+                  className={`px-3 py-2 rounded-full transition-all duration-300 text-sm ${
                     currentMode === "journal"
                       ? "bg-white/20 text-white shadow-lg"
                       : "bg-transparent text-white/70 hover:text-white"
                   }`}
                 >
-                  <Edit3 className="w-4 h-4 mr-2" />
-                  Viết nhật ký
+                  <Edit3 className="w-4 h-4 mr-1" />
+                  Nhật ký
                 </Button>
                 <Button
                   onClick={() => handleModeSwitch("chat")}
-                  className={`px-4 py-2 rounded-full transition-all duration-300 ${
+                  className={`px-3 py-2 rounded-full transition-all duration-300 text-sm ${
                     currentMode === "chat"
                       ? "bg-white/20 text-white shadow-lg"
                       : "bg-transparent text-white/70 hover:text-white"
                   }`}
                 >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Trò chuyện với AI
+                  <MessageCircle className="w-4 h-4 mr-1" />
+                  Chat AI
                 </Button>
                 <Button
                   onClick={() => handleModeSwitch("info")}
-                  className={`px-4 py-2 rounded-full transition-all duration-300 ${
+                  className={`px-3 py-2 rounded-full transition-all duration-300 text-sm ${
                     currentMode === "info"
                       ? "bg-white/20 text-white shadow-lg"
                       : "bg-transparent text-white/70 hover:text-white"
                   }`}
                 >
-                  <Info className="w-4 h-4 mr-2" />
+                  <Info className="w-4 h-4 mr-1" />
                   Thông tin
+                </Button>
+                <Button
+                  onClick={() => handleModeSwitch("cards")}
+                  className={`px-3 py-2 rounded-full transition-all duration-300 text-sm ${
+                    currentMode === "cards"
+                      ? "bg-white/20 text-white shadow-lg"
+                      : "bg-transparent text-white/70 hover:text-white"
+                  }`}
+                >
+                  <CreditCard className="w-4 h-4 mr-1" />
+                  Tạo Card
                 </Button>
               </div>
             </div>
@@ -263,6 +277,11 @@ const Journal = () => {
           {/* Info Mode */}
           {currentMode === "info" && (
             <InfoScreen />
+          )}
+
+          {/* Cards Mode */}
+          {currentMode === "cards" && (
+            <PersonalityCards />
           )}
 
           {/* Footer */}
