@@ -78,7 +78,7 @@ const PersonalityCards = () => {
           <div className="flex justify-center">
             <div 
               ref={cardRef}
-              className={`w-80 h-96 rounded-3xl relative overflow-hidden shadow-2xl border-2 ${selectedPersonality.borderColor}`}
+              className={`w-72 h-[450px] rounded-3xl relative overflow-hidden shadow-2xl border-2 ${selectedPersonality.borderColor}`}
               style={{
                 backgroundImage: `url(${selectedPersonality.backgroundImage})`,
                 backgroundSize: 'cover',
@@ -87,13 +87,13 @@ const PersonalityCards = () => {
               }}
             >
               {/* Overlay gradient for better text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
               
               {/* Card Content */}
-              <div className="h-full flex flex-col justify-between p-8 relative z-10">
+              <div className="h-full flex flex-col justify-between p-6 relative z-10">
                 {/* Title */}
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold text-white mb-2 tracking-wide drop-shadow-lg">
+                <div className="text-center pt-4">
+                  <h3 className="text-xl font-bold text-white mb-2 tracking-wide drop-shadow-lg">
                     {selectedPersonality.name}
                   </h3>
                 </div>
@@ -103,14 +103,14 @@ const PersonalityCards = () => {
 
                 {/* Quote */}
                 <div className="text-center mb-6">
-                  <p className="text-white text-sm italic leading-relaxed drop-shadow-md">
+                  <p className="text-white text-sm italic leading-relaxed drop-shadow-md px-2">
                     {selectedPersonality.quote}
                   </p>
                 </div>
 
                 {/* Button */}
-                <div className="text-center">
-                  <div className={`inline-block px-6 py-2 rounded-full border-2 ${selectedPersonality.borderColor} bg-black/20 backdrop-blur-sm`}>
+                <div className="text-center mb-4">
+                  <div className={`inline-block px-6 py-3 rounded-full border-2 ${selectedPersonality.borderColor} bg-black/30 backdrop-blur-sm`}>
                     <span className="text-white text-sm font-medium">
                       KHÁM PHÁ BẢN THÂN
                     </span>
@@ -118,7 +118,7 @@ const PersonalityCards = () => {
                 </div>
 
                 {/* Footer */}
-                <div className="text-center mt-4">
+                <div className="text-center pb-2">
                   <p className="text-white/80 text-xs drop-shadow-sm">
                     Tại WhoIsMe.AI bằng AI
                   </p>

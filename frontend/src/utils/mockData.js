@@ -29,7 +29,7 @@ Tôi nghĩ về những giấc mơ mà mình đã từng có và nhận ra rằn
       name: "NGƯỜI KIÊN CƯỜNG",
       quote: "Tôi đứng vững giữa giông bão, và biến thử thách thành ánh sáng.",
       traits: ["Kiên trì", "Bền bỉ", "Dũng cảm", "Tự tin"],
-      backgroundImage: "https://images.unsplash.com/photo-1676195470090-7c90bf539b3b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwxfHxzaWxob3VldHRlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzUyNTU5NTU5fDA&ixlib=rb-4.1.0&q=85",
+      backgroundImage: "https://whoisme.ai/public/images/profile-1.png",
       borderColor: "border-orange-400",
       description: "Bạn là người có tinh thần kiên cường, không bao giờ từ bỏ trước khó khăn. Bạn có khả năng vượt qua mọi thử thách và biến chúng thành cơ hội phát triển.",
       advice: "Hãy nhớ rằng sức mạnh không phải là không bao giờ ngã, mà là luôn đứng dậy sau mỗi lần vấp ngã. Đừng quên chăm sóc bản thân trong hành trình này."
@@ -38,7 +38,7 @@ Tôi nghĩ về những giấc mơ mà mình đã từng có và nhận ra rằn
       name: "NGƯỜI CHỮA LÀNH",
       quote: "Tôi lắng nghe để chữa lành, và hiện diện để ai cũng cảm thấy an toàn.",
       traits: ["Thấu cảm", "Chữa lành", "Lắng nghe", "Quan tâm"],
-      backgroundImage: "https://images.pexels.com/photos/33002449/pexels-photo-33002449.jpeg",
+      backgroundImage: "https://whoisme.ai/public/images/profile-2.png",
       borderColor: "border-green-400",
       description: "Bạn có khả năng đặc biệt trong việc chữa lành và mang lại sự an ủi cho người khác. Sự hiện diện của bạn như một nguồn năng lượng tích cực.",
       advice: "Trong khi chăm sóc người khác, đừng quên chăm sóc chính bản thân mình. Bạn cần được nạp năng lượng để có thể tiếp tục lan tỏa tình yêu thương."
@@ -47,7 +47,7 @@ Tôi nghĩ về những giấc mơ mà mình đã từng có và nhận ra rằn
       name: "NGƯỜI SÁNG TẠO",
       quote: "Tôi tạo ra vẻ đẹp từ những điều bình thường, và thổi hồn vào mọi thứ tôi chạm đến.",
       traits: ["Sáng tạo", "Nghệ thuật", "Tưởng tượng", "Độc đáo"],
-      backgroundImage: "https://images.unsplash.com/photo-1536924430914-91f9e2041b83?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwxfHxhcnRpc3RpYyUyMHBvcnRyYWl0fGVufDB8fHx8MTc1MjU1OTU2OXww&ixlib=rb-4.1.0&q=85",
+      backgroundImage: "https://whoisme.ai/public/images/profile-3.png",
       borderColor: "border-purple-400",
       description: "Bạn có tâm hồn nghệ sĩ, luôn tìm thấy cảm hứng trong những điều nhỏ bé. Khả năng sáng tạo của bạn mang lại màu sắc mới cho cuộc sống.",
       advice: "Hãy tin vào trực giác sáng tạo của mình và đừng sợ thể hiện những ý tưởng độc đáo. Thế giới cần những góc nhìn mới mẻ như của bạn."
@@ -56,7 +56,7 @@ Tôi nghĩ về những giấc mơ mà mình đã từng có và nhận ra rằn
       name: "NGƯỜI DẪN ĐƯỜNG",
       quote: "Tôi thắp sáng con đường cho người khác, và dẫn dắt bằng tấm gương của chính mình.",
       traits: ["Lãnh đạo", "Trách nhiệm", "Dẫn dắt", "Tầm nhìn"],
-      backgroundImage: "https://images.unsplash.com/photo-1615911907304-d418c903b058?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwzfHxzaWxob3VldHRlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzUyNTU5NTU5fDA&ixlib=rb-4.1.0&q=85",
+      backgroundImage: "https://whoisme.ai/public/images/profile-4.png",
       borderColor: "border-blue-400",
       description: "Bạn có khả năng lãnh đạo tự nhiên và luôn sẵn sàng dẫn dắt người khác đến thành công. Tầm nhìn của bạn luôn hướng về tương lai tươi sáng.",
       advice: "Lãnh đạo thật sự là phục vụ. Hãy luôn lắng nghe và học hỏi từ đội ngũ của mình để cùng nhau phát triển."
@@ -65,7 +65,7 @@ Tôi nghĩ về những giấc mơ mà mình đã từng có và nhận ra rằn
       name: "NGƯỜI KHÁM PHÁ",
       quote: "Tôi không ngừng tìm kiếm, khám phá những chân trời mới và mở rộng giới hạn của bản thân.",
       traits: ["Tò mò", "Khám phá", "Mạo hiểm", "Học hỏi"],
-      backgroundImage: "https://images.unsplash.com/photo-1544502062-f82887f03d1c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwyfHxzaWxob3VldHRlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzUyNTU5NTU5fDA&ixlib=rb-4.1.0&q=85",
+      backgroundImage: "https://whoisme.ai/public/images/profile-5.png",
       borderColor: "border-teal-400",
       description: "Bạn có tinh thần phiêu lưu và luôn khao khát khám phá những điều mới mẻ. Sự tò mò của bạn là động lực để không ngừng học hỏi và phát triển.",
       advice: "Hãy tin vào hành trình khám phá của mình, nhưng đừng quên rằng đôi khi việc dừng lại và suy ngẫm cũng quan trọng không kém."
@@ -74,7 +74,7 @@ Tôi nghĩ về những giấc mơ mà mình đã từng có và nhận ra rằn
       name: "NGƯỜI BẢO VỆ",
       quote: "Tôi đứng vững để bảo vệ những gì tôi yêu thương, và là pháo đài an toàn cho mọi người.",
       traits: ["Bảo vệ", "Trung thành", "Đáng tin", "Hy sinh"],
-      backgroundImage: "https://images.pexels.com/photos/33012842/pexels-photo-33012842.jpeg",
+      backgroundImage: "https://whoisme.ai/public/images/profile-6.png",
       borderColor: "border-gray-400",
       description: "Bạn có bản năng bảo vệ mạnh mẽ và luôn đặt lợi ích của người khác lên trước. Sự trung thành và đáng tin cậy là những phẩm chất quý báu của bạn.",
       advice: "Việc bảo vệ người khác là điều tốt đẹp, nhưng hãy nhớ rằng bạn cũng cần được bảo vệ và chăm sóc. Đừng quên yêu thương bản thân."
