@@ -57,6 +57,31 @@ const PersonalityCards = () => {
         description: "Vui lòng đợi một chút.",
       });
 
+      // Function to convert image to base64
+      const getImageAsBase64 = (url) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            const dataURL = canvas.toDataURL('image/png');
+            resolve(dataURL);
+          };
+          img.onerror = () => {
+            // Fallback: use original URL if conversion fails
+            resolve(url);
+          };
+          img.src = url;
+        });
+      };
+
+      // Convert background image to base64
+      const base64Image = await getImageAsBase64(selectedPersonality.backgroundImage);
+
       // Create a temporary card element for rendering
       const tempCard = document.createElement('div');
       tempCard.style.cssText = `
@@ -67,7 +92,7 @@ const PersonalityCards = () => {
         left: -9999px;
         border-radius: 24px;
         overflow: hidden;
-        background-image: url(${selectedPersonality.backgroundImage});
+        background-image: url(${base64Image});
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -203,14 +228,14 @@ const PersonalityCards = () => {
       tempCard.appendChild(content);
       document.body.appendChild(tempCard);
 
-      // Wait for images to load
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Wait for everything to be ready
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       const canvas = await html2canvas(tempCard, {
         scale: 2,
         backgroundColor: null,
-        useCORS: true,
-        allowTaint: false,
+        useCORS: false,
+        allowTaint: true,
         logging: false,
         width: 288,
         height: 450,
