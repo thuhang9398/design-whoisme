@@ -195,10 +195,20 @@ const PersonalityCards = () => {
             
             <Button
               onClick={downloadCard}
+              disabled={isDownloading}
               className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
-              <Download className="w-5 h-5 mr-2" />
-              Tải Xuống
+              {isDownloading ? (
+                <>
+                  <div className="w-5 h-5 mr-2 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Đang tải...
+                </>
+              ) : (
+                <>
+                  <Download className="w-5 h-5 mr-2" />
+                  Tải Xuống
+                </>
+              )}
             </Button>
           </div>
 
