@@ -58,11 +58,37 @@ const PersonalityCards = () => {
         description: "Vui lòng đợi một chút.",
       });
 
+      // Function to convert image to base64
+      const getImageAsBase64 = (url) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            const dataURL = canvas.toDataURL('image/png');
+            resolve(dataURL);
+          };
+          img.onerror = reject;
+          img.src = url;
+        });
+      };
+
+      // Convert background image to base64
+      const base64Image = await getImageAsBase64(selectedPersonality.backgroundImage);
+      
+      // Temporarily set background to base64
+      const originalBackground = cardRef.current.style.backgroundImage;
+      cardRef.current.style.backgroundImage = `url(${base64Image})`;
+
       const canvas = await html2canvas(cardRef.current, {
         scale: 2,
         backgroundColor: null,
         useCORS: true,
-        allowTaint: true,
+        allowTaint: false,
         logging: false,
         width: cardRef.current.offsetWidth,
         height: cardRef.current.offsetHeight,
@@ -71,6 +97,9 @@ const PersonalityCards = () => {
         windowWidth: cardRef.current.offsetWidth,
         windowHeight: cardRef.current.offsetHeight,
       });
+
+      // Restore original background
+      cardRef.current.style.backgroundImage = originalBackground;
 
       // Create download link
       const link = document.createElement("a");
@@ -91,7 +120,7 @@ const PersonalityCards = () => {
       console.error("Download error:", error);
       toast({
         title: "Lỗi tải xuống",
-        description: "Không thể tải xuống card. Vui lòng thử lại.",
+        description: "Không thể tải xuống card. Có thể do lỗi CORS. Vui lòng thử lại.",
         variant: "destructive",
       });
     } finally {
